@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triples FC - Complete User Journey App</title>
+  <style>
+    :root {
+      --bg-dark: #0b1310;
+      --accent-green: #00ff66;
+      --border-green: #1a2e23;
+      --text-white: #ffffff;
+    }
+    
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      padding-bottom: 70px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: var(--bg-dark);
+      border-bottom: 1px solid var(--border-green);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-weight: bold;
+      color: var(--accent-green);
+      font-size: 18px;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .search-box {
+      padding: 6px 12px;
+      background: #122019;
+      border: 1px solid var(--border-green);
+      border-radius: 4px;
+      color: white;
+      font-size: 14px;
+    }
+
+    .menu-btn, .action-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .page {
+      display: none;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* Form and UI Elements */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 5px;
+      color: #aaa;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      background: #122019;
+      border: 1px solid var(--border-green);
+      border-radius: 4px;
+      color: white;
+      box-sizing: border-box;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--accent-green);
+      border: none;
+      border-radius: 4px;
+      color: #0b1310;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* Bottom Nav Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--bg-dark);
+      border-top: 1px solid var(--border-green);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      z-index: 1000;
+    }
+
+    .nav-item {
+      color: #888;
+      text-decoration: none;
+      font-size: 11px;
+      text-align: center;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .nav-item.active, .nav-item:hover {
+      color: var(--accent-green);
+    }
+
+    /* Side Drawer */
+    .side-drawer {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      width: 280px;
+      height: 100%;
+      background-color: var(--bg-dark);
+      border-left: 1px solid var(--border-green);
+      transition: right 0.3s ease-in-out;
+      z-index: 2000;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .side-drawer.open {
+      right: 0;
+    }
+
+    .close-drawer {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      float: right;
+    }
+
+    .drawer-links {
+      list-style: none;
+      padding: 40px 0 0 0;
+      margin: 0;
+    }
+
+    .drawer-links li {
+      margin: 20px 0;
+    }
+
+    .drawer-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .drawer-links a:hover {
+      color: var(--accent-green);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="logo">TRIPLES FC</div>
+    <div class="header-controls">
+      <input type="text" id="siteSearch" class="search-box" placeholder="Search news, players...">
+      <button id="menuToggle" class="menu-btn">☰</button>
+    </div>
+  </header>
+
+  <!-- 1. Membership Signup Journey -->
+  <div id="signup-page" class="page active">
+    <h2>Join Triples FC</h2>
+    <p>Sign up to access member-only perks, match tickets, and club updates.</p>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" class="form-control" placeholder="user@example.com">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" class="form-control" placeholder="••••••••">
+    </div>
+    <button class="btn-primary" onclick="switchPage('home-page')">Create Account</button>
+  </div>
+
+  <!-- 2. Main View Dashboard -->
+  <div id="home-page" class="page">
+    <h2>Welcome to Triples FC</h2>
+    <p>More Than a Club, It's a Family[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span).</p>
+    <div style="background: #122019; padding: 15px; border-radius: 8px; border: 1px solid var(--border-green); margin-top: 15px;">
+      <h3>Next Match</h3>
+      <p>Triples FC vs. Kano United</p>
+      <button class="btn-primary" onclick="switchPage('match-page')">Open Match Centre</button>
+    </div>
+  </div>
+
+  <!-- 3. Tickets Page Journey -->
+  <div id="tickets-page" class="page">
+    <h2>Buy Tickets</h2>
+    <div class="form-group">
+      <label>Select Match Fixture</label>
+      <select class="form-control">
+        <option>Triples FC vs. Kano United</option>
+        <option>Sessen Pass 2025 - Available</option>
+      </select>
+    </div>
+    <div style="background: #122019; padding: 15px; border-radius: 8px; border: 1px solid var(--border-green); text-align: center; margin-bottom: 15px;">
+      <p style="font-size: 12px; color: #aaa;">Stadium Seating Map Active</p>
+      <div style="height: 100px; background: #0b1310; border: 1px dashed var(--accent-green); display: flex; align-items: center; justify-content: center; color: var(--accent-green);">Interactive Stadium Grid</div>
+    </div>
+    <button class="btn-primary" onclick="switchPage('profile-page')">Proceed to Checkout</button>
+  </div>
+
+  <!-- 4. Shop Page Journey -->
+  <div id="shop-page" class="page">
+    <h2>Club Shop & Merchandise</h2>
+    <div style="background: #122019; padding: 15px; border-radius: 8px; border: 1px solid var(--border-green); margin-bottom: 15px;">
+      <h4>Official Home Jersey</h4>
+      <p>Price: N 15,000</p>
+      <button class="btn-primary" onclick="alert('Added Official Home Jersey to cart!')">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- 5. Match Centre Journey -->
+  <div id="match-page" class="page">
+    <h2>Match Centre</h2>
+    <div style="background: #122019; padding: 15px; border-radius: 8px; border: 1px solid var(--border-green); text-align: center;">
+      <h3>Triples FC 0 - 0 Kano United</h3>
+      <p style="color: var(--accent-green);">Live Commentary & Statistics Enabled</p>
+      <button class="btn-primary" onclick="switchPage('home-page')">Back to Home</button>
+    </div>
+  </div>
+
+  <!-- 6. My Profile Journey -->
+  <div id="profile-page" class="page">
+    <h2>My Profile & Tickets</h2>
+    <div style="background: #122019; padding: 15px; border-radius: 8px; border: 1px solid var(--border-green);">
+      <p><strong>Account:</strong> Member #1024</p>
+      <p><strong>Membership Tier:</strong> VIP Ultra</p>
+      <p><strong>Purchased Tickets:</strong> 2 Active Passes</p>
+      <button class="btn-primary" onclick="switchPage('signup-page')" style="background: #d9534f; color: white;">Log Out</button>
+    </div>
+  </div>
+
+  <!-- Slide-Out Menu Drawer -->
+  <div id="sideDrawer" class="side-drawer">
+    <button id="closeDrawer" class="close-drawer">&times;</button>
+    <ul class="drawer-links">
+      <li><a href="#" onclick="switchPage('home-page'); closeMenuDrawer();">Home Dashboard</a></li>
+      <li><a href="#" onclick="switchPage('tickets-page'); closeMenuDrawer();">Buy Tickets</a></li>
+      <li><a href="#" onclick="switchPage('shop-page'); closeMenuDrawer();">Club Shop</a></li>
+      <li><a href="#" onclick="switchPage('match-page'); closeMenuDrawer();">Match Centre</a></li>
+      <li><a href="#" onclick="switchPage('profile-page'); closeMenuDrawer();">My Profile</a></li>
+      <li><a href="#" onclick="switchPage('signup-page'); closeMenuDrawer();">Sign Up / Login</a></li>
+    </ul>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="switchPage('home-page')">🏠 Home</button>
+    <button class="nav-item" onclick="switchPage('tickets-page')">🎫 Tickets</button>
+    <button class="nav-item" onclick="switchPage('shop-page')">🛍️ Shop</button>
+    <button class="nav-item" onclick="switchPage('match-page')">⚽ Match</button>
+    <button class="nav-item" onclick="switchPage('profile-page')">👤 Profile</button>
+  </nav>
+
+  <script>
+    function switchPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    const menuToggle = document.getElementById('menuToggle');
+    const sideDrawer = document.getElementById('sideDrawer');
+    const closeDrawer = document.getElementById('closeDrawer');
+
+    menuToggle.addEventListener('click', () => {
+      sideDrawer.classList.add('open');
+    });
+
+    function closeMenuDrawer() {
+      sideDrawer.classList.remove('open');
+    }
+
+    closeDrawer.addEventListener('click', closeMenuDrawer);
+
+    const siteSearch = document.getElementById('siteSearch');
+    siteSearch.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        alert("Search query processed: " + siteSearch.value);
+      }
+    });
+  </script>
+
+</body>
+</html>
